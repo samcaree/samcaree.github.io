@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>SAMCARE - Kesehatan Mental</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        :root {
+            --primary: #5d78ff;
+            --secondary: #ff6b6b;
+            --accent: #ffd166;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #06d6a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        html {
+            overflow-x: hidden;
+            position: relative;
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            position: relative;
+            min-height: 100%;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        
+        /* Disable zoom on mobile */
+        input, textarea, select {
+            font-size: 16px;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, #4a6fa5 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .loading-text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            color: var(--dark);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+            font-weight: 800;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            z-index: 101;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #4a6fa5 100%);
+            color: white;
+            padding: 6rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.5s;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            background-color: #ffc233;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover i {
+            transform: translateX(3px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.3s;
+        }
+        
+        /* Mental Health Tests */
+        .tests-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .test-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-card:hover::before {
+            width: 8px;
+        }
+        
+        .test-card h3 {
+            color: var(--dark);
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .test-card p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Test Form Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+        
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .test-question {
+            margin-bottom: 1.8rem;
+        }
+        
+        .test-question h4 {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option-label:hover {
+            border-color: var(--primary);
+            background-color: rgba(93, 120, 255, 0.05);
+        }
+        
+        .option-label input {
+            margin-right: 10px;
+        }
+        
+        .submit-test {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .submit-test:hover {
+            background-color: #4a65e0;
+        }
+        
+        /* Result Modal */
+        .result-content {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .result-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .result-message {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .result-severity {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: rgba(93, 120, 255, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .result-advice {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .result-advice h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Tips Section */
+        .tips-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.2s;
+        }
+        
+        .tip-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .tip-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .tip-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .tip-content h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .tip-content p {
+            color: var(--gray);
+        }
+        
+        /* Resources Section */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .resource-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .resource-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .footer-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+        }
+        
+        .footer-wave .shape-fill {
+            fill: var(--light);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            
+            .section {
+                padding: 4rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.8rem 0;
+                font-size: 1.1rem;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            nav ul li a::after {
+                display: none;
+            }
+            
+            .hero {
+                padding: 5rem 1.5rem 4rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .tips-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .tip-item {
+                flex-direction: column;
+            }
+            
+            .tip-icon {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+            
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .test-card, .resource-card {
+                padding: 1.8rem 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Prevent mobile zoom */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+        
+        /* Mobile specific fixes */
+        @media (hover: none) {
+            .btn:hover {
+                transform: none;
+                background-color: var(--accent);
+            }
+            
+            .btn-outline:hover {
+                background: transparent;
+                color: white;
+            }
+            
+            .option-label:hover {
+                border-color: #e0e0e0;
+                background-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-text">SAMCARE</div>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo"><i class="fas fa-brain"></i>SAM<span>CARE</span></div>
+            <button class="hamburger">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#tests">Tes Mental</a></li>
+                    <li><a href="#tips">Tips Sehat</a></li>
+                    <li><a href="#resources">Bantuan</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Kesehatan Mental Anda Adalah Prioritas Kami</h1>
+            <p>Platform komprehensif untuk membantu Anda memahami, mengevaluasi, dan meningkatkan kesejahteraan mental dengan dukungan profesional.</p>
+            <div class="btn-group">
+                <a href="#tests" class="btn">Mulai Tes Sekarang <i class="fas fa-arrow-right"></i></a>
+                <a href="#tips" class="btn btn-outline">Pelajari Tips <i class="fas fa-book-open"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mental Health Tests Section -->
+    <section class="section" id="tests">
+        <h2 class="section-title">Tes Kesehatan Mental</h2>
+        <p class="section-subtitle">Evaluasi kondisi mental Anda dengan alat screening yang divalidasi secara klinis</p>
+        
+        <div class="tests-container">
+            <div class="test-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.2s">
+                <h3>Tes Depresi (PHQ-9)</h3>
+                <p>Alat screening 9 pertanyaan yang mengukur tingkat depresi berdasarkan kriteria diagnostik.</p>
+                <button class="btn start-test" data-test="depresi">Mulai Tes <i class="fas fa-clipboard-list"></i></button>
+            </div>
+            
+            <div class="test-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.4s">
+                <h3>Tes Kecemasan (GAD-7)</h3>
+                <p>Ukur tingkat gangguan kecemasan umum Anda dengan 7 pertanyaan sederhana.</p>
+                <button class="btn start-test" data-test="kecemasan">Mulai Tes <i class="fas fa-clipboard-list"></i></button>
+            </div>
+            
+            <div class="test-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.6s">
+                <h3>Tes Tingkat Stres</h3>
+                <p>Identifikasi tingkat stres Anda dan dapatkan rekomendasi untuk mengelolanya.</p>
+                <button class="btn start-test" data-test="stres">Mulai Tes <i class="fas fa-clipboard-list"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Modals -->
+    <div class="modal-overlay" id="testModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3 class="modal-title">Tes Depresi (PHQ-9)</h3>
+            
+            <form id="testForm">
+                <div class="test-question">
+                    <h4>1. Seberapa sering Anda terganggu oleh masalah berikut selama 2 minggu terakhir? Kurang tertarik atau kurang senang melakukan berbagai kegiatan</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>2. Merasa sedih, tertekan, atau putus asa</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>3. Sulit tidur atau tidur terlalu banyak</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>4. Merasa lelah atau tidak memiliki energi</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>5. Nafsu makan berkurang atau berlebihan</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>6. Merasa buruk tentang diri sendiri - atau bahwa Anda adalah orang yang gagal atau telah mengecewakan diri sendiri atau keluarga</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>7. Kesulitan berkonsentrasi pada sesuatu, seperti membaca koran atau menonton televisi</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>8. Bergerak atau berbicara sangat lambat sehingga orang lain memperhatikannya. Atau sebaliknya - merasa gelisah atau tidak bisa diam sehingga Anda lebih banyak bergerak dari biasanya</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>9. Memikirkan bahwa akan lebih baik jika Anda mati atau ingin menyakiti diri sendiri dengan cara tertentu</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn submit-test">Lihat Hasil Tes <i class="fas fa-chart-bar"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Anxiety Test Modal -->
+    <div class="modal-overlay" id="anxietyTestModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3 class="modal-title">Tes Kecemasan (GAD-7)</h3>
+            
+            <form id="anxietyTestForm">
+                <div class="test-question">
+                    <h4>1. Seberapa sering selama 2 minggu terakhir Anda merasa gugup, cemas, atau gelisah?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq1" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq1" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq1" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq1" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>2. Seberapa sering selama 2 minggu terakhir Anda tidak dapat menghentikan atau mengendalikan kekhawatiran?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq2" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq2" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq2" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq2" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>3. Seberapa sering selama 2 minggu terakhir Anda terlalu khawatir tentang berbagai hal?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq3" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq3" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq3" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq3" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>4. Seberapa sering selama 2 minggu terakhir Anda mengalami kesulitan untuk rileks?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq4" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq4" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq4" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq4" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>5. Seberapa sering selama 2 minggu terakhir Anda merasa sangat gelisah sehingga Anda sulit untuk duduk diam?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq5" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq5" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq5" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq5" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>6. Seberapa sering selama 2 minggu terakhir Anda menjadi mudah kesal atau marah?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq6" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq6" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq6" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq6" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>7. Seberapa sering selama 2 minggu terakhir Anda merasa takut seolah-olah sesuatu yang mengerikan akan terjadi?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="aq7" value="0" required> Tidak sama sekali
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq7" value="1"> Beberapa hari
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq7" value="2"> Lebih dari separuh waktu
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="aq7" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn submit-test">Lihat Hasil Tes <i class="fas fa-chart-bar"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Stress Test Modal -->
+    <div class="modal-overlay" id="stressTestModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3 class="modal-title">Tes Tingkat Stres</h3>
+            
+            <form id="stressTestForm">
+                <div class="test-question">
+                    <h4>1. Seberapa sering dalam sebulan terakhir Anda merasa tidak mampu mengendalikan hal-hal penting dalam hidup Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq1" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq1" value="1"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq1" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq1" value="3"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq1" value="4"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>2. Seberapa sering dalam sebulan terakhir Anda merasa percaya diri tentang kemampuan Anda untuk menangani masalah pribadi Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq2" value="4" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq2" value="3"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq2" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq2" value="1"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq2" value="0"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>3. Seberapa sering dalam sebulan terakhir Anda merasa bahwa segala sesuatu berjalan sesuai keinginan Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq3" value="4" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq3" value="3"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq3" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq3" value="1"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq3" value="0"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>4. Seberapa sering dalam sebulan terakhir Anda merasa kesulitan menumpuk begitu tinggi sehingga Anda tidak dapat mengatasinya?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq4" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq4" value="1"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq4" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq4" value="3"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq4" value="4"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>5. Seberapa sering dalam sebulan terakhir Anda merasa mampu mengendalikan hal-hal yang mengganggu dalam hidup Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq5" value="4" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq5" value="3"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq5" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq5" value="1"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq5" value="0"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>6. Seberapa sering dalam sebulan terakhir Anda merasa mampu mengendalikan cara Anda menghabiskan waktu Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq6" value="4" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq6" value="3"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq6" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq6" value="1"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq6" value="0"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>7. Seberapa sering dalam sebulan terakhir Anda merasa marah karena hal-hal yang terjadi di luar kendali Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq7" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq7" value="1"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq7" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq7" value="3"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq7" value="4"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>8. Seberapa sering dalam sebulan terakhir Anda merasa yakin tentang kemampuan Anda untuk menangani masalah pribadi Anda?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq8" value="4" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq8" value="3"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq8" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq8" value="1"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq8" value="0"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>9. Seberapa sering dalam sebulan terakhir Anda merasa bahwa kesulitan menumpuk begitu tinggi sehingga Anda tidak dapat mengatasinya?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq9" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq9" value="1"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq9" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq9" value="3"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq9" value="4"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <h4>10. Seberapa sering dalam sebulan terakhir Anda merasa stres karena tidak dapat menyelesaikan semua hal yang harus Anda lakukan?</h4>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="sq10" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq10" value="1"> Jarang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq10" value="2"> Kadang-kadang
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq10" value="3"> Sering
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sq10" value="4"> Sangat sering
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn submit-test">Lihat Hasil Tes <i class="fas fa-chart-bar"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-content">
+            <div class="result-content">
+                <div class="result-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3 class="result-title">Hasil Tes Depresi Anda</h3>
+                <div class="result-score">12</div>
+                <div class="result-severity">Depresi Sedang</div>
+                <p class="result-message">Hasil tes menunjukkan Anda mengalami gejala depresi sedang. Ini bukan diagnosis klinis, tetapi sebaiknya Anda mempertimbangkan untuk berkonsultasi dengan profesional kesehatan mental.</p>
+                
+                <div class="result-advice">
+                    <h4>Saran untuk Anda:</h4>
+                    <p>• Pertimbangkan untuk berkonsultasi dengan psikolog atau psikiater<br>
+                    • Lakukan aktivitas fisik ringan secara teratur<br>
+                    • Jaga pola tidur yang teratur<br>
+                    • Berbagilah perasaan dengan orang yang Anda percayai<br>
+                    • Latih teknik relaksasi seperti pernapasan dalam</p>
+                </div>
+                
+                <button class="btn close-result">Tutup <i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mental Health Tips Section -->
+    <section class="section" id="tips">
+        <h2 class="section-title">Tips Kesehatan Mental</h2>
+        <p class="section-subtitle">Strategi berbasis bukti untuk meningkatkan kesejahteraan mental Anda</p>
+        
+        <div class="tips-container">
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>1. Rutin Berolahraga</h3>
+                    <p>Aktivitas fisik teratur 30 menit sehari dapat meningkatkan mood dan mengurangi gejala kecemasan dan depresi. Olahraga melepaskan endorfin yang merupakan penghilang rasa sakit alami dan peningkat suasana hati.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>2. Prioritaskan Tidur Berkualitas</h3>
+                    <p>Kurang tidur memperburuk gejala kesehatan mental. Ciptakan rutinitas tidur, hindari kafein di sore hari, dan buat kamar tidur yang nyaman untuk meningkatkan kualitas tidur Anda.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>3. Praktikkan Mindfulness</h3>
+                    <p>Meditasi mindfulness 10 menit sehari dapat mengurangi stres dan kecemasan. Fokus pada napas dan hadir di momen saat ini tanpa penilaian dapat membantu mengelola emosi dengan lebih baik.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>4. Jaga Hubungan Sosial</h3>
+                    <p>Manusia adalah makhluk sosial. Hubungan yang bermakna dapat bertindak sebagai penyangga terhadap stres. Luangkan waktu untuk keluarga dan teman, bahkan melalui sambungan virtual jika diperlukan.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>5. Pola Makan Seimbang</h3>
+                    <p>Nutrisi memengaruhi kesehatan mental. Konsumsi makanan kaya omega-3, vitamin B, dan antioksidan dapat mendukung fungsi otak yang sehat. Hindari makanan olahan berlebihan dan gula rafinasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="section" id="resources">
+        <h2 class="section-title">Sumber Daya & Bantuan</h2>
+        <p class="section-subtitle">Akses dukungan profesional dan materi edukasi untuk kesehatan mental</p>
+        
+        <div class="resources-grid">
+            <div class="resource-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.2s">
+                <div class="resource-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h3>Hotline Darurat</h3>
+                <p>Layanan darurat 24 jam untuk krisis kesehatan mental. Hubungi 119 atau 112 untuk bantuan segera dari tenaga profesional.</p>
+                <a href="#" class="btn">Hubungi Sekarang</a>
+            </div>
+            
+            <div class="resource-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.4s">
+                <div class="resource-icon">
+                    <i class="fas fa-laptop-medical"></i>
+                </div>
+                <h3>Konseling Online</h3>
+                <p>Sesi konseling dengan psikolog bersertifikat melalui platform online yang aman dan nyaman dari rumah Anda.</p>
+                <a href="#" class="btn">Daftar Konseling</a>
+            </div>
+            
+            <div class="resource-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.6s">
+                <div class="resource-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3>Komunitas Dukungan</h3>
+                <p>Bergabunglah dengan kelompok dukungan untuk berbagi pengalaman dan mendapatkan dukungan dari mereka yang memahami.</p>
+                <a href="#" class="btn">Gabung Komunitas</a>
+            </div>
+            
+            <div class="resource-card" style="animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s">
+                <div class="resource-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Artikel Edukatif</h3>
+                <p>Perpustakaan digital berisi artikel, panduan, dan materi edukasi tentang berbagai aspek kesehatan mental.</p>
+                <a href="https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-mental-health" class="btn">Baca Artikel</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Tentang SAMCARE</h3>
+                <p style="color: #ddd; margin-bottom: 1.5rem; font-size: 0.95rem;">Platform kesehatan mental yang menyediakan alat evaluasi, sumber daya edukasi, dan akses ke profesional kesehatan mental.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Menu Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="#tests"><i class="fas fa-clipboard-list"></i> Tes Mental</a></li>
+                    <li><a href="#tips"><i class="fas fa-lightbulb"></i> Tips Sehat</a></li>
+                    <li><a href="#resources"><i class="fas fa-hands-helping"></i> Bantuan</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Kontak Kami</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@samcare.id"><i class="fas fa-envelope"></i> cs.samcare@gmail.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Banten, Indonesia</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 SAMCARE. All rights reserved.<br> Dibuat Oleh: Syahdan Frahira
+        </div>
+    </footer>
+
+    <script>
+        // Loading Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+                
+                // Animate elements one by one after loading
+                setTimeout(function() {
+                    const animatedElements = document.querySelectorAll('.test-card, .tips-container, .resource-card');
+                    animatedElements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.style.animation = `fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards ${index * 0.2}s`;
+                        }, index * 100);
+                    });
+                }, 500);
+            }, 2000);
+        });
+
+        // Mobile Menu Toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+            this.innerHTML = document.querySelector('nav ul').classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    document.querySelector('nav ul').classList.remove('active');
+                    document.querySelector('.hamburger').innerHTML = '☰';
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Test Modal Functionality
+        const testButtons = document.querySelectorAll('.start-test');
+        const testModal = document.getElementById('testModal');
+        const anxietyTestModal = document.getElementById('anxietyTestModal');
+        const stressTestModal = document.getElementById('stressTestModal');
+        const resultModal = document.getElementById('resultModal');
+        const closeModalButtons = document.querySelectorAll('.close-modal, .close-result');
+        const testForm = document.getElementById('testForm');
+        const anxietyTestForm = document.getElementById('anxietyTestForm');
+        const stressTestForm = document.getElementById('stressTestForm');
+        
+        testButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const testType = this.getAttribute('data-test');
+                let modalToShow;
+                
+                switch(testType) {
+                    case 'depresi':
+                        modalToShow = testModal;
+                        break;
+                    case 'kecemasan':
+                        modalToShow = anxietyTestModal;
+                        break;
+                    case 'stres':
+                        modalToShow = stressTestModal;
+                        break;
+                }
+                
+                modalToShow.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                testModal.classList.remove('active');
+                anxietyTestModal.classList.remove('active');
+                stressTestModal.classList.remove('active');
+                resultModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        testModal.addEventListener('click', function(e) {
+            if (e.target === testModal) {
+                testModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        anxietyTestModal.addEventListener('click', function(e) {
+            if (e.target === anxietyTestModal) {
+                anxietyTestModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        stressTestModal.addEventListener('click', function(e) {
+            if (e.target === stressTestModal) {
+                stressTestModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        resultModal.addEventListener('click', function(e) {
+            if (e.target === resultModal) {
+                resultModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        testForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate score
+            let score = 0;
+            const inputs = this.querySelectorAll('input[type="radio"]:checked');
+            inputs.forEach(input => {
+                score += parseInt(input.value);
+            });
+            
+            // Determine severity
+            let severity = '';
+            let advice = '';
+            
+            if (score <= 4) {
+                severity = 'Minimal/Tidak Ada Depresi';
+                advice = 'Hasil Anda menunjukkan sedikit atau tidak ada gejala depresi. Pertahankan gaya hidup sehat dan pantau perasaan Anda secara berkala.';
+            } else if (score <= 9) {
+                severity = 'Depresi Ringan';
+                advice = 'Anda menunjukkan gejala depresi ringan. Pertimbangkan untuk berbicara dengan seseorang yang Anda percayai atau pantau gejala Anda. Jika gejala menetap atau memburuk, pertimbangkan untuk mencari bantuan profesional.';
+            } else if (score <= 14) {
+                severity = 'Depresi Sedang';
+                advice = 'Hasil tes menunjukkan Anda mengalami gejala depresi sedang. Ini bukan diagnosis klinis, tetapi sebaiknya Anda mempertimbangkan untuk berkonsultasi dengan profesional kesehatan mental.';
+            } else if (score <= 19) {
+                severity = 'Depresi Sedang Berat';
+                advice = 'Skor Anda menunjukkan gejala depresi yang cukup parah. Sangat disarankan untuk berkonsultasi dengan dokter atau profesional kesehatan mental segera. Anda tidak perlu menghadapi ini sendirian.';
+            } else {
+                severity = 'Depresi Berat';
+                advice = 'Skor Anda menunjukkan gejala depresi yang parah. Sangat penting untuk segera mencari bantuan dari profesional kesehatan mental. Hubungi layanan darurat atau profesional kesehatan segera.';
+            }
+            
+            // Update result modal
+            document.querySelector('.result-title').textContent = 'Hasil Tes Depresi Anda';
+            document.querySelector('.result-icon').innerHTML = '<i class="fas fa-heartbeat"></i>';
+            document.querySelector('.result-score').textContent = score;
+            document.querySelector('.result-severity').textContent = severity;
+            document.querySelector('.result-message').textContent = advice;
+            
+            // Update advice based on severity
+            let adviceContent = '<h4>Saran untuk Anda:</h4><p>';
+            
+            if (score <= 4) {
+                adviceContent += '• Pertahankan rutinitas harian yang sehat<br>';
+                adviceContent += '• Lakukan aktivitas yang Anda nikmati<br>';
+                adviceContent += '• Jaga hubungan sosial dengan orang terdekat<br>';
+                adviceContent += '• Pantau perasaan Anda secara berkala';
+            } else if (score <= 9) {
+                adviceContent += '• Pertimbangkan untuk berbicara dengan seseorang yang Anda percayai<br>';
+                adviceContent += '• Lakukan aktivitas fisik ringan secara teratur<br>';
+                adviceContent += '• Jaga pola tidur yang teratur<br>';
+                adviceContent += '• Pertimbangkan teknik relaksasi seperti meditasi atau pernapasan dalam';
+            } else if (score <= 14) {
+                adviceContent += '• Pertimbangkan untuk berkonsultasi dengan psikolog atau psikiater<br>';
+                adviceContent += '• Lakukan aktivitas fisik ringan secara teratur<br>';
+                adviceContent += '• Jaga pola tidur yang teratur<br>';
+                adviceContent += '• Berbagilah perasaan dengan orang yang Anda percayai<br>';
+                adviceContent += '• Latih teknik relaksasi seperti pernapasan dalam';
+            } else if (score <= 19) {
+                adviceContent += '• Segera buat janji dengan profesional kesehatan mental<br>';
+                adviceContent += '• Beritahu orang terdekat tentang kondisi Anda<br>';
+                adviceContent += '• Hindari mengisolasi diri sendiri<br>';
+                adviceContent += '• Ikuti rutinitas harian yang terstruktur<br>';
+                adviceContent += '• Hindari alkohol dan obat-obatan terlarang';
+            } else {
+                adviceContent += '• Segera hubungi profesional kesehatan mental atau layanan darurat<br>';
+                adviceContent += '• Jangan sendirian - mintalah seseorang untuk menemani Anda<br>';
+                adviceContent += '• Hindari segala sesuatu yang dapat membahayakan diri sendiri<br>';
+                adviceContent += '• Ingat bahwa bantuan tersedia dan perasaan ini bersifat sementara';
+            }
+            
+            adviceContent += '</p>';
+            document.querySelector('.result-advice').innerHTML = adviceContent;
+            
+            // Show result modal
+            testModal.classList.remove('active');
+            resultModal.classList.add('active');
+        });
+        
+        anxietyTestForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate score
+            let score = 0;
+            const inputs = this.querySelectorAll('input[type="radio"]:checked');
+            inputs.forEach(input => {
+                score += parseInt(input.value);
+            });
+            
+            // Determine severity
+            let severity = '';
+            let advice = '';
+            
+            if (score <= 4) {
+                severity = 'Minimal/Tidak Ada Kecemasan';
+                advice = 'Hasil Anda menunjukkan sedikit atau tidak ada gejala kecemasan. Pertahankan gaya hidup sehat dan pantau perasaan Anda secara berkala.';
+            } else if (score <= 9) {
+                severity = 'Kecemasan Ringan';
+                advice = 'Anda menunjukkan gejala kecemasan ringan. Pertimbangkan untuk mempraktikkan teknik relaksasi dan mengurangi stres. Jika gejala menetap atau memburuk, pertimbangkan untuk mencari bantuan profesional.';
+            } else if (score <= 14) {
+                severity = 'Kecemasan Sedang';
+                advice = 'Hasil tes menunjukkan Anda mengalami gejala kecemasan sedang. Ini mungkin mengganggu aktivitas sehari-hari Anda. Pertimbangkan untuk berkonsultasi dengan profesional kesehatan mental.';
+            } else {
+                severity = 'Kecemasan Berat';
+                advice = 'Skor Anda menunjukkan gejala kecemasan yang parah. Sangat disarankan untuk berkonsultasi dengan dokter atau profesional kesehatan mental segera. Perawatan yang tepat dapat sangat membantu.';
+            }
+            
+            // Update result modal
+            document.querySelector('.result-title').textContent = 'Hasil Tes Kecemasan Anda';
+            document.querySelector('.result-icon').innerHTML = '<i class="fas fa-heartbeat"></i>';
+            document.querySelector('.result-score').textContent = score;
+            document.querySelector('.result-severity').textContent = severity;
+            document.querySelector('.result-message').textContent = advice;
+            
+            // Update advice based on severity
+            let adviceContent = '<h4>Saran untuk Anda:</h4><p>';
+            
+            if (score <= 4) {
+                adviceContent += '• Lanjutkan praktik manajemen stres sehari-hari<br>';
+                adviceContent += '• Pertahankan rutinitas yang teratur<br>';
+                adviceContent += '• Lakukan aktivitas fisik secara teratur<br>';
+                adviceContent += '• Pantau tingkat kecemasan Anda secara berkala';
+            } else if (score <= 9) {
+                adviceContent += '• Coba teknik relaksasi seperti pernapasan dalam atau meditasi<br>';
+                adviceContent += '• Kurangi konsumsi kafein dan stimulan lainnya<br>';
+                adviceContent += '• Prioritaskan tidur yang cukup dan berkualitas<br>';
+                adviceContent += '• Pertimbangkan untuk berbicara dengan seseorang tentang kekhawatiran Anda';
+            } else if (score <= 14) {
+                adviceContent += '• Pertimbangkan untuk berkonsultasi dengan profesional kesehatan mental<br>';
+                adviceContent += '• Praktikkan teknik grounding saat merasa cemas<br>';
+                adviceContent += '• Buat jadwal aktivitas yang terstruktur<br>';
+                adviceContent += '• Kurangi konsumsi berita atau media yang memicu kecemasan<br>';
+                adviceContent += '• Pertimbangkan terapi kognitif perilaku (CBT)';
+            } else {
+                adviceContent += '• Segera buat janji dengan profesional kesehatan mental<br>';
+                adviceContent += '• Pertimbangkan terapi dan/atau pengobatan jika direkomendasikan<br>';
+                adviceContent += '• Buat rencana keselamatan jika mengalami serangan panik<br>';
+                adviceContent += '• Identifikasi dan hindari pemicu kecemasan jika memungkinkan<br>';
+                adviceContent += '• Bergabunglah dengan kelompok pendukung jika tersedia';
+            }
+            
+            adviceContent += '</p>';
+            document.querySelector('.result-advice').innerHTML = adviceContent;
+            
+            // Show result modal
+            anxietyTestModal.classList.remove('active');
+            resultModal.classList.add('active');
+        });
+        
+        stressTestForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate score
+            let score = 0;
+            const inputs = this.querySelectorAll('input[type="radio"]:checked');
+            inputs.forEach(input => {
+                score += parseInt(input.value);
+            });
+            
+            // Determine severity
+            let severity = '';
+            let advice = '';
+            
+            if (score <= 13) {
+                severity = 'Stres Rendah';
+                advice = 'Hasil Anda menunjukkan tingkat stres yang rendah. Anda tampaknya mengelola stres dengan baik. Pertahankan gaya hidup sehat dan strategi koping yang efektif.';
+            } else if (score <= 26) {
+                severity = 'Stres Sedang';
+                advice = 'Anda menunjukkan tingkat stres sedang. Ini mungkin mulai memengaruhi kesejahteraan Anda. Pertimbangkan untuk mengidentifikasi sumber stres dan mengembangkan strategi untuk mengelolanya.';
+            } else {
+                severity = 'Stres Tinggi';
+                advice = 'Skor Anda menunjukkan tingkat stres yang tinggi. Stres pada tingkat ini dapat berdampak signifikan pada kesehatan fisik dan mental Anda. Sangat disarankan untuk mengambil langkah-langkah untuk mengurangi stres dan mempertimbangkan bantuan profesional.';
+            }
+            
+            // Update result modal
+            document.querySelector('.result-title').textContent = 'Hasil Tes Stres Anda';
+            document.querySelector('.result-icon').innerHTML = '<i class="fas fa-heartbeat"></i>';
+            document.querySelector('.result-score').textContent = score;
+            document.querySelector('.result-severity').textContent = severity;
+            document.querySelector('.result-message').textContent = advice;
+            
+            // Update advice based on severity
+            let adviceContent = '<h4>Saran untuk Anda:</h4><p>';
+            
+            if (score <= 13) {
+                adviceContent += '• Pertahankan kebiasaan sehat yang sudah Anda miliki<br>';
+                adviceContent += '• Lanjutkan praktik manajemen stres yang efektif<br>';
+                adviceContent += '• Tetap waspada terhadap tanda-tanda peningkatan stres<br>';
+                adviceContent += '• Pertimbangkan untuk membantu orang lain mengelola stres mereka';
+            } else if (score <= 26) {
+                adviceContent += '• Identifikasi sumber utama stres dalam hidup Anda<br>';
+                adviceContent += '• Praktikkan teknik relaksasi seperti pernapasan dalam atau meditasi<br>';
+                adviceContent += '• Prioritaskan waktu untuk diri sendiri dan aktivitas yang menyenangkan<br>';
+                adviceContent += '• Pertimbangkan untuk berbicara dengan teman, keluarga, atau konselor tentang stres Anda<br>';
+                adviceContent += '• Evaluasi dan sesuaikan ekspektasi serta komitmen Anda';
+            } else {
+                adviceContent += '• Segera ambil langkah untuk mengurangi stres dalam hidup Anda<br>';
+                adviceContent += '• Pertimbangkan untuk berkonsultasi dengan profesional kesehatan mental<br>';
+                adviceContent += '• Delegasikan tugas jika memungkinkan<br>';
+                adviceContent += '• Belajar mengatakan "tidak" untuk komitmen tambahan<br>';
+                adviceContent += '• Buat perubahan gaya hidup untuk mengurangi stres kronis<br>';
+                adviceContent += '• Pertimbangkan terapi atau program manajemen stres';
+            }
+            
+            adviceContent += '</p>';
+            document.querySelector('.result-advice').innerHTML = adviceContent;
+            
+            // Show result modal
+            stressTestModal.classList.remove('active');
+            resultModal.classList.add('active');
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('header').style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.1)';
+                document.querySelector('header').style.padding = '0.5rem 2rem';
+            } else {
+                document.querySelector('header').style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+                document.querySelector('header').style.padding = '1rem 2rem';
+            }
+        });
+        
+        // Prevent zoom on mobile
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Disable double tap to zoom
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
