@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>SAMCARE - Kesehatan Mental</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Reset & Base Styles */
         :root {
             --primary: #5d78ff;
+            --primary-dark: #3a56d4;
             --secondary: #ff6b6b;
             --accent: #ffd166;
+            --accent-dark: #ffb700;
             --dark: #2b2d42;
+            --dark-light: #4a4d6b;
             --light: #f8f9fa;
             --gray: #6c757d;
+            --gray-light: #e9ecef;
             --success: #06d6a0;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
         * {
@@ -29,6 +35,7 @@
             overflow-x: hidden;
             position: relative;
             height: 100%;
+            scroll-behavior: smooth;
         }
         
         body {
@@ -54,7 +61,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, #4a6fa5 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -75,6 +82,19 @@
             margin-bottom: 30px;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             position: relative;
+            background: linear-gradient(90deg, #fff, var(--accent), #fff);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
         }
         
         .loading-text::after {
@@ -111,7 +131,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            transform: translateY(0);
+        }
+        
+        header.hide {
+            transform: translateY(-100%);
         }
         
         .header-container {
@@ -128,6 +153,12 @@
             color: var(--primary);
             display: flex;
             align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.03);
         }
         
         .logo span {
@@ -156,6 +187,8 @@
             font-weight: 500;
             transition: color 0.3s;
             font-size: 1rem;
+            position: relative;
+            padding: 0.5rem 0;
         }
         
         nav ul li a:hover {
@@ -165,7 +198,7 @@
         nav ul li a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
@@ -185,16 +218,25 @@
             font-size: 1.5rem;
             color: var(--dark);
             z-index: 101;
+            transition: transform 0.3s ease;
+        }
+        
+        .hamburger:hover {
+            transform: scale(1.1);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #4a6fa5 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 6rem 2rem 5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .hero::before {
@@ -222,12 +264,14 @@
             margin-bottom: 1.5rem;
             font-weight: 700;
             line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2.5rem;
             opacity: 0.9;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .btn {
@@ -240,7 +284,7 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: var(--transition);
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -248,8 +292,23 @@
             overflow: hidden;
         }
         
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
         .btn:hover {
-            background-color: #ffc233;
+            background-color: var(--accent-dark);
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
@@ -284,6 +343,14 @@
             padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section-title {
@@ -322,7 +389,7 @@
             border-radius: 15px;
             padding: 2.5rem 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: var(--transition);
             opacity: 0;
             transform: translateY(20px);
             position: relative;
@@ -377,6 +444,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
         .modal-overlay.active {
@@ -412,9 +480,16 @@
             transition: color 0.3s;
             background: none;
             border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
         
         .close-modal:hover {
+            background-color: var(--gray-light);
             color: var(--secondary);
         }
         
@@ -458,6 +533,7 @@
         
         .option-label input {
             margin-right: 10px;
+            accent-color: var(--primary);
         }
         
         .submit-test {
@@ -471,7 +547,7 @@
         }
         
         .submit-test:hover {
-            background-color: #4a65e0;
+            background-color: var(--primary-dark);
         }
         
         /* Result Modal */
@@ -484,6 +560,13 @@
             font-size: 4rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .result-title {
@@ -545,6 +628,11 @@
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: flex-start;
+            transition: transform 0.3s ease;
+        }
+        
+        .tip-item:hover {
+            transform: translateX(5px);
         }
         
         .tip-item:last-child {
@@ -558,6 +646,13 @@
             color: var(--primary);
             margin-right: 1.5rem;
             flex-shrink: 0;
+            background: rgba(93, 120, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .tip-content h3 {
@@ -583,7 +678,7 @@
             border-radius: 15px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: var(--transition);
             opacity: 0;
             transform: translateY(20px);
             position: relative;
@@ -599,6 +694,13 @@
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            background: rgba(93, 120, 255, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .resource-card h3 {
@@ -611,6 +713,40 @@
         .resource-card p {
             color: var(--gray);
             margin-bottom: 1.5rem;
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            cursor: pointer;
+            transition: var(--transition);
+            transform: translateY(0);
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .fab:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px) scale(1.05);
         }
         
         /* Footer */
@@ -680,7 +816,7 @@
         .footer-links a {
             color: #ddd;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
             font-size: 0.95rem;
             display: inline-block;
         }
@@ -834,6 +970,14 @@
             .modal-content {
                 padding: 2rem 1.5rem;
             }
+            
+            .fab {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -875,6 +1019,10 @@
                 border-color: #e0e0e0;
                 background-color: transparent;
             }
+            
+            .fab:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -888,7 +1036,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <div class="logo"><i class="fas fa-brain"></i>SAM<span>CARE</span></div>
+            <a href="#home" class="logo"><i class="fas fa-brain"></i>SAM<span>CARE</span></a>
             <button class="hamburger">☰</button>
             <nav>
                 <ul>
@@ -901,6 +1049,11 @@
             </nav>
         </div>
     </header>
+
+    <!-- Floating Action Button -->
+    <div class="fab" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -1596,7 +1749,45 @@
                 </div>
                 <h3>Artikel Edukatif</h3>
                 <p>Perpustakaan digital berisi artikel, panduan, dan materi edukasi tentang berbagai aspek kesehatan mental.</p>
-                <a href="https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-mental-health" class="btn">Baca Artikel</a>
+                <a href="#" class="btn">Baca Artikel</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">Tentang SAMCARE</h2>
+        <p class="section-subtitle">Platform kesehatan mental untuk semua orang</p>
+        
+        <div class="tips-container">
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>Misi Kami</h3>
+                    <p>Memberikan akses mudah ke alat evaluasi kesehatan mental yang valid dan sumber daya edukasi untuk meningkatkan kesadaran akan pentingnya kesejahteraan mental.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>Tim Kami</h3>
+                    <p>Dikembangkan oleh tim profesional kesehatan mental dan pengembang yang berdedikasi untuk menciptakan solusi digital yang bermanfaat bagi masyarakat.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>Privasi & Keamanan</h3>
+                    <p>Kami sangat menjaga kerahasiaan data Anda. Semua informasi yang Anda berikan dilindungi dengan protokol keamanan terkini.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1613,12 +1804,6 @@
             <div class="footer-column">
                 <h3>Tentang SAMCARE</h3>
                 <p style="color: #ddd; margin-bottom: 1.5rem; font-size: 0.95rem;">Platform kesehatan mental yang menyediakan alat evaluasi, sumber daya edukasi, dan akses ke profesional kesehatan mental.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
             </div>
             
             <div class="footer-column">
@@ -1634,14 +1819,14 @@
             <div class="footer-column">
                 <h3>Kontak Kami</h3>
                 <ul class="footer-links">
-                    <li><a href="mailto:info@samcare.id"><i class="fas fa-envelope"></i> cs.samcare@gmail.com</a></li>
+                    <li><a href="mailto:cs.samcare@gmail.com"><i class="fas fa-envelope"></i> cs.samcare@gmail.com</a></li>
                     <li><a href="#"><i class="fas fa-map-marker-alt"></i> Banten, Indonesia</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            &copy; 2025 SAMCARE. All rights reserved.<br> Dibuat Oleh: Syahdan Frahira
+            &copy; 2025 SAMCARE. All rights reserved. <br> Dibuat Oleh: Syahdan Frahira
         </div>
     </footer>
 
@@ -1661,6 +1846,27 @@
                     });
                 }, 500);
             }, 2000);
+            
+            // Initialize Intersection Observer for section animations
+            const sections = document.querySelectorAll('.section');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const sectionObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
         });
 
         // Mobile Menu Toggle
@@ -1980,14 +2186,46 @@
         });
         
         // Header scroll effect
+        let lastScroll = 0;
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                document.querySelector('header').style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.1)';
-                document.querySelector('header').style.padding = '0.5rem 2rem';
-            } else {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                document.querySelector('header').classList.remove('hide');
                 document.querySelector('header').style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
                 document.querySelector('header').style.padding = '1rem 2rem';
+                return;
             }
+            
+            if (currentScroll > lastScroll && !document.querySelector('header').classList.contains('hide')) {
+                // Scroll down
+                document.querySelector('header').classList.add('hide');
+            } else if (currentScroll < lastScroll && document.querySelector('header').classList.contains('hide')) {
+                // Scroll up
+                document.querySelector('header').classList.remove('hide');
+                document.querySelector('header').style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.1)';
+                document.querySelector('header').style.padding = '0.5rem 2rem';
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
         
         // Prevent zoom on mobile
