@@ -19,6 +19,13 @@
 - **Hasil Instan**  
   📊 Skor visual • 🎯 Tingkat keparahan • 💡 Rekomendasi personal
 
+- **🏆 Pencipta**
+  **SYAHDAN FRAHIRA**
+  <img src="https://img.shields.io/badge/%F0%9F%8C%90_Portfolio-000000?style=flat"
+  <img src="https://img.shields.io/badge/%F0%9F%93%A7_Kontak-4285F4?style=flat"
+  
+
+
 - **Optimalkan Mobile**  
   📱 Layar sentuh • 🚫 Tanpa zoom • 🌈 Aksesibilitas warna
 
@@ -29,10 +36,3 @@
 3. Penyajian Bertahap
 4. Tanpa Istilah Medis Sulit
 
-## 🏆 Pencipta
-<div align="center"> <img src="https://i.imgur.com/3JQZbXr.png" width="100" style="border-radius:50%">
-Syahdan Frahira
-https://img.shields.io/badge/%F0%9F%8C%90_Portfolio-000000?style=flat
-https://img.shields.io/badge/%F0%9F%93%A7_Kontak-4285F4?style=flat
-
-</div><hr><div align="center"> <sub>Dibangun dengan hati di Indonesia</sub> • <sub>© 2023</sub> </div> ```
