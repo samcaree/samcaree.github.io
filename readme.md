@@ -19,12 +19,8 @@
 - **Hasil Instan**  
   📊 Skor visual • 🎯 Tingkat keparahan • 💡 Rekomendasi personal
 
-- **🏆 Pencipta**
-  **SYAHDAN FRAHIRA**
-  <img src="https://img.shields.io/badge/%F0%9F%8C%90_Portfolio-000000?style=flat"
-  <img src="https://img.shields.io/badge/%F0%9F%93%A7_Kontak-4285F4?style=flat"
-  
-
+- **Dibuat Oleh:**
+  <br>**SYAHDAN FRAHIRA**  
 
 - **Optimalkan Mobile**  
   📱 Layar sentuh • 🚫 Tanpa zoom • 🌈 Aksesibilitas warna
