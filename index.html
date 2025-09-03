@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMCAREE - Kesehatan Mental dan Jiwa</title>
+    <meta name="description" content="SAMCARE oleh Syahdan Frahira. Tes kesehatan mental online gratis untuk cek tingkat stres, anxiety, dan depresi. Cepat, rahasia, dan hasilnya instan.">
+    <meta name="author" content="Syahdan Frahira">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading-overlay">
+        <div class="loading-logo">SAMCAREE</div>
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    SAMCAREE
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Tentang</a></li>
+                        <li><a href="#test">Tes Kesehatan</a></li>
+                        <li><a href="#resources">Sumber Daya</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Kesehatan Mental Anda Adalah Prioritas Kami</h1>
+            <p>SAMCAREE menyediakan alat untuk mengevaluasi dan meningkatkan kesehatan mental Anda dengan cara yang mudah dan terpercaya.</p>
+            <div>
+                <a href="#test" class="btn">Mulai Tes Sekarang</a>
+                <a href="#about" class="btn btn-outline">Pelajari Lebih Lanjut</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tentang SAMCAREE</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Mengenal Lebih Dekat dengan SAMCAREE</h3>
+                    <p>SAMCAREE adalah platform inovatif yang didedikasikan untuk meningkatkan kesadaran akan pentingnya kesehatan mental dan memberikan alat untuk mengevaluasi kondisi psikologis Anda.</p>
+                    <p>Kami percaya bahwa kesehatan mental sama pentingnya dengan kesehatan fisik, dan setiap orang berhak mendapatkan akses untuk memahami kondisi mental mereka.</p>
+                    <p>Dengan tes yang dirancang oleh profesional, SAMCAREE membantu Anda mengenali tanda-tanda awal masalah kesehatan mental dan memberikan rekomendasi yang sesuai.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://manajemenrumahsakit.net/wp-content/uploads/2020/08/Kesehatan-Mental-Tenaga-Medis.jpg" alt="Tentang SAMCAREE">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Section -->
+<section class="test" id="test">
+    <div class="container">
+        <div class="section-title">
+            <h2>Tes Kesehatan Mental</h2>
+        </div>
+        <div class="test-form">
+            <form id="mentalHealthTest">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Usia</label>
+                    <input type="number" id="age" class="form-control" min="12" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Jenis Kelamin</label>
+                    <select id="gender" class="form-control" required>
+                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                        <option value="other">Lainnya</option>
+                    </select>
+                </div>
+                
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary);">Pertanyaan Tes</h3>
+                <p>Silakan jawab semua pertanyaan berikut dengan jujur berdasarkan perasaan Anda dalam 2 minggu terakhir.</p>
+                
+                <div class="question">
+                    <h4>1. Seberapa sering Anda merasa sedih, tertekan, atau putus asa?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>2. Seberapa sering Anda merasa kurang berminat atau kurang senang dalam melakukan aktivitas?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>3. Seberapa sering Anda mengalami kesulitan tidur atau tidur terlalu banyak?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>4. Seberapa sering Anda merasa lelah atau kurang energi?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>5. Seberapa sering Anda mengalami nafsu makan yang buruk atau makan berlebihan?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>6. Seberapa sering Anda merasa tidak puas dengan diri sendiri, atau merasa bahwa Anda telah mengecewakan diri sendiri atau keluarga?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q6" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>7. Seberapa sering Anda mengalami kesulitan berkonsentrasi pada hal-hal seperti membaca koran atau menonton televisi?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q7" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>8. Seberapa sering Anda bergerak atau berbicara sangat lambat sehingga orang lain memperhatikannya? Atau sebaliknya - merasa gelisah sehingga Anda bergerak lebih banyak dari biasanya?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q8" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>9. Seberapa sering Anda memiliki pikiran bahwa Anda akan lebih baik mati atau ingin melukai diri sendiri dengan cara tertentu?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q9" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan tambahan mulai dari sini -->
+                
+                <div class="question">
+                    <h4>10. Seberapa sering Anda merasa cemas, gugup, atau tegang?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q10" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>11. Seberapa sering Anda merasa tidak mampu mengendalikan kekhawatiran Anda?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q11" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>12. Seberapa sering Anda merasa mudah marah atau tersinggung?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q12" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>13. Seberapa sering Anda merasa takut seolah-olah sesuatu yang mengerikan akan terjadi?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q13" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>14. Seberapa sering Anda menghindari situasi sosial karena merasa cemas atau tidak nyaman?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q14" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>15. Seberapa sering Anda mengalami gejala fisik seperti jantung berdebar, tangan berkeringat, atau sesak napas tanpa alasan yang jelas?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q15" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>16. Seberapa sering Anda merasa sulit untuk bersantai?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q16" value="0" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="1"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="2"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="3"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>17. Seberapa sering Anda merasa positif tentang masa depan?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q17" value="3" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="2"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="1"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="0"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>18. Seberapa sering Anda merasa puas dengan kehidupan Anda secara keseluruhan?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q18" value="3" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="2"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="1"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="0"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>19. Seberapa sering Anda merasa mampu mengatasi masalah Anda?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q19" value="3" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="2"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="1"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="0"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>20. Seberapa sering Anda merasa memiliki dukungan dari orang-orang di sekitar Anda?</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q20" value="3" required> Tidak pernah
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="2"> Beberapa hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="1"> Lebih dari setengah hari
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="0"> Hampir setiap hari
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Kirim Jawaban</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+    <!-- Result Modal - Diperbaiki untuk Mobile -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="result-content">
+                <h2 class="result-title">Hasil Tes Kesehatan Mental Anda</h2>
+                <div class="result-score" id="resultScore"></div>
+                <div class="result-description" id="resultDescription"></div>
+                <div class="result-suggestion">
+                    <h4>Saran dan Rekomendasi</h4>
+                    <p id="resultSuggestion"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resources Section -->
+    <section class="resources" id="resources">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sumber Daya Kesehatan Mental</h2>
+            </div>
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-image">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80" alt="Meditasi">
+                    </div>
+                    <div class="resource-body">
+                        <h3>Teknik Meditasi untuk Mengurangi Stres</h3>
+                        <p>Pelajari berbagai teknik meditasi sederhana yang dapat membantu mengurangi tingkat stres dan kecemasan Anda sehari-hari.</p>
+                        <a href="#" class="resource-link">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-image">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tidur">
+                    </div>
+                    <div class="resource-body">
+                        <h3>Pola Tidur yang Sehat</h3>
+                        <p>Temukan cara untuk meningkatkan kualitas tidur Anda dan memahami hubungan antara tidur dengan kesehatan mental.</p>
+                        <a href="#" class="resource-link">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Olahraga">
+                    </div>
+                    <div class="resource-body">
+                        <h3>Olahraga dan Kesehatan Mental</h3>
+                        <p>Ketahui bagaimana aktivitas fisik dapat mempengaruhi kondisi mental Anda dan jenis olahraga yang paling bermanfaat.</p>
+                        <a href="#" class="resource-link">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Kami Siap Membantu Anda</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Alamat</h4>
+                                <p>Rangkasbitung, Banten</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>cs.samcaree@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Nama Lengkap</label>
+                            <input type="text" id="contactName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subjek</label>
+                            <input type="text" id="contactSubject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Pesan</label>
+                            <textarea id="contactMessage" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Tentang SAMCAREE</h3>
+                    <p>SAMCAREE adalah platform kesehatan mental yang menyediakan alat evaluasi dan sumber daya untuk meningkatkan kesejahteraan mental.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Tentang Kami</a></li>
+                        <li><a href="#test">Tes Kesehatan</a></li>
+                        <li><a href="#resources">Sumber Daya</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="#">Konseling Online</a></li>
+                        <li><a href="#">Tes Psikologi</a></li>
+                        <li><a href="#">Artikel Kesehatan</a></li>
+                        <li><a href="#">Forum Diskusi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Hubungi Kami</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> cs.samcaree@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Banten, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SAMCAREE. Semua Hak Dilindungi.</p> Dibuat Oleh: Syahdan Frahira
+            </div>
+        </div>
+    </footer>
+<script src="assets/js/script.js"></script>
+</body>
+</html>
